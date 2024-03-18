@@ -2,10 +2,14 @@ package com.group.libraryapp.controller.book;
 
 
 import com.group.libraryapp.dto.book.request.BookCreateRequest;
-import com.group.libraryapp.dto.loan.LoanCreateRequest;
+import com.group.libraryapp.dto.book.request.BookLoanRequest;
+import com.group.libraryapp.dto.book.request.BookReturnRequest;
 import com.group.libraryapp.service.book.BookService;
-import com.group.libraryapp.service.loan.LoanService;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -13,13 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class BookController {
 
     public final BookService bookService;
-    public final LoanService loanService;
-
-    public BookController(BookService bookService,
-                          LoanService loanService) {
-        this.bookService = bookService;
-        this.loanService = loanService;
-    }
+    private static final Logger log = LogManager.getLogger(BookController.class);
 
     public BookController(BookService bookService) {
         this.bookService = bookService;
@@ -31,9 +29,14 @@ public class BookController {
     }
 
     @PostMapping("/book/loan")
-    public void saveLoan(@RequestBody LoanCreateRequest request){
-
+    public void loanBook(@RequestBody BookLoanRequest request){
+        bookService.loanBook(request);
     }
 
+    @PutMapping("/book/return")
+    public void loanBook(@RequestBody BookReturnRequest request){
+        log.info("@#@#@# request " + request.getBookName() +"  "+request.getUserName());
+        bookService.returnBook(request);
+    }
 
 }//end

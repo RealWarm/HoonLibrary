@@ -21,4 +21,8 @@ public class Book {
         }//if
         this.name = name;
     }
+
+    public String getName() {
+        return name;
+    }
 }
