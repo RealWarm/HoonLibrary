@@ -10,62 +10,108 @@ import java.util.StringTokenizer;
 
 public class Main {
     public static int[][] grp;
+    public static int[] wei=new int[2];
+    public static int cnt;
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int n = Integer.parseInt(br.readLine());
+        StringTokenizer st;
         grp=new int[n][n];
-        StringBuilder sb = new StringBuilder();
-        System.out.println("==============================");
+//        System.out.println("==============================");
         for(int i=0; i<n; i++){
-            String line = br.readLine();
+            st = new StringTokenizer(br.readLine(), " ");
             for(int j=0; j<n; j++){
-                grp[i][j]=line.charAt(j)-'0';
-                System.out.print(grp[i][j]+" ");
+                grp[i][j]=Integer.parseInt(st.nextToken());
+//                System.out.print(grp[i][j]+" ");
             }//for-j
-            System.out.println();
+//            System.out.println();
         }//for-i
-        System.out.println("==============================");
-        sb.append("(");
-        System.out.println(dfs(0, 0, n-1, n-1, sb).toString());
+//        System.out.println("==============================");
+        dfs(0,0, n);
+        for(int a : wei){
+            System.out.println(a);
+        }
     }//main
 
-    public static int countElement(int startX, int startY, int endX, int endY){
-        int flag=grp[startX][startY];
-        for(int i=startX; i<=endX; i++){
-            for(int j=startY; j<=endY; j++){
-                if(grp[i][j]!=flag) return -1;
+    public static void dfs(int sx, int sy, int n){
+        int tmp=countArea(sx, sy, n);
+        if(tmp != -1){
+            wei[tmp]++;
+        }else{
+            dfs(sx, sy, n/2);
+            dfs(sx, sy+n/2, n/2);
+            dfs(sx+n/2, sy, n/2);
+            dfs(sx+n/2, sy+n/2, n/2);
+        }
+    }//dfs
+
+    public static boolean countArea1(int sx, int sy, int ex, int ey){
+        int flag = grp[sx][sy];
+        for(int i=sx; i<=ex; i++){
+            for(int j=sy; j<=ey; j++){
+                if(grp[i][j]!=flag){
+                    return false;
+                }//if
+            }//for-j
+        }//for-i
+        return true;
+    }//countArea1
+
+    public static int countArea(int sx, int sy, int ll){
+        int flag=grp[sx][sy];
+        for(int i=sx; i<sx+ll; i++){
+            for(int j=sy; j<sy+ll; j++){
+                if(grp[i][j]!=flag){
+                    return -1;
+                }//if
             }//for-j
         }//for-i
         return flag;
-    }// countElement
-
-    public static StringBuilder dfs(int startX, int startY, int endX, int endY, StringBuilder bb){
-        System.out.println("=============================");
-        System.out.println(startX+", "+ startY+", "+ endX+", "+ endY);
-        int result=countElement(startX, startY, endX, endY);
-        int length=(endX-startX);
-        if(length==2){
-            bb.append("(");
-            for(int i=startX; i<=endX; i++){
-                for(int j=startY; j<=endY; j++){
-                    bb.append(grp[i][j]);
-                }//for-j
-            }//for-i
-            bb.append(")");
-        } else if(result==-1){
-            int half=((int)((endX-startX)/2));
-            StringBuilder bb1=dfs(startX, startY, startX+half, startY+half, bb);
-            StringBuilder bb2=bb.append(dfs(startX, startY+half, startX+half, endY, bb));
-            StringBuilder bb3=bb.append(dfs(startX+half, startY, endX, startY+half, bb));
-            StringBuilder bb4=bb.append(dfs(startX+half, startY+half, endX, endY, bb));
-            bb.append("(").append(bb1).append(bb2).append(bb3).append(4).append(")");
-        }else{
-            System.out.println("inhere!");
-            bb.append(result).append(")");
-        }
-        System.out.println(bb.toString());
-        System.out.println("=============================");
-        return bb;
-    }//dfs
+    }//countArea
 
 }//end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
