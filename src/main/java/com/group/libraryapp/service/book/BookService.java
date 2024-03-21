@@ -50,10 +50,12 @@ public class BookService {
         // 4. 유저 정보를 가져온다.
         User user = userRepository.findByName(request.getUserName())
                 .orElseThrow(IllegalArgumentException::new);
+        // 도메인 계층에 비즈니스 로직이 들어갔다.
+        user.loanBook(book.getName());
 
         // 5. 유저 정보와 책 정보를 기반으로 userLoanHistory를 저장
-        userLoanHistoryRepository.save(
-                new UserLoanHistory(user, book.getName()));
+//        userLoanHistoryRepository.save(
+//                new UserLoanHistory(user, book.getName()));
     }
 
     @Transactional
@@ -61,11 +63,14 @@ public class BookService {
         // 1. 유저 정보를 가져온다.
         User user = userRepository.findByName(request.getUserName())
                 .orElseThrow(IllegalArgumentException::new);
-        UserLoanHistory history = userLoanHistoryRepository
-                .findByUserIdAndBookName(user.getId(), request.getBookName())
-                .orElseThrow(IllegalArgumentException::new);
-        history.doReturn();
+//        UserLoanHistory history = userLoanHistoryRepository
+//                .findByUserIdAndBookName(user.getId(), request.getBookName())
+//                .orElseThrow(IllegalArgumentException::new);
+//        history.doReturn();
+        System.out.println("========================================");
         // userLoanHistoryRepository.save(history); // 트랜잭션 사용하니깐 안해도됨
+        user.returnBook(request.getBookName());
+
     }
 }
 

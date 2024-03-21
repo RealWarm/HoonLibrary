@@ -19,7 +19,10 @@ public class User {
     private Integer age;
     // 1:n
     // 연관관계의 주인이 아닌쪽에 mappedBy를 해야한다.
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user",
+                cascade = CascadeType.ALL,
+                orphanRemoval = true,
+                fetch = FetchType.EAGER) //객체간의 관계가 끊어진 테이터를 자동으로 제거하는 옵션
     private List<UserLoanHistory> userLoanHistories = new ArrayList<>();
     protected User() {}
 
@@ -45,5 +48,17 @@ public class User {
 
     public void updateName(String name){
         this.name=name;
+    }
+
+    public void loanBook(String bookName){
+        this.userLoanHistories.add(new UserLoanHistory(this, bookName));
+    }
+
+    public void returnBook(String bookName){
+        UserLoanHistory targetHistory = this.userLoanHistories.stream()
+                .filter(history -> history.getBookName().equals(bookName))
+                .findFirst()
+                .orElseThrow(IllegalArgumentException::new);
+        targetHistory.doReturn();
     }
 }
