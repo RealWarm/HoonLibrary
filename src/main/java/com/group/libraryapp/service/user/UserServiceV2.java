@@ -1,6 +1,7 @@
 package com.group.libraryapp.service.user;
 
 
+import com.group.libraryapp.aop.LogExecutionTime;
 import com.group.libraryapp.domain.user.User;
 import com.group.libraryapp.domain.user.UserRepository;
 import com.group.libraryapp.dto.user.request.UserCreateRequest;
@@ -29,6 +30,7 @@ public class UserServiceV2 {
         userRepository.save(new User(request.getName(), request.getAge()));
     }
 
+    @LogExecutionTime
     @Transactional(readOnly=true)
     public List<UserResponse> getUsers(){
         List<User> users =userRepository.findAll();
@@ -38,6 +40,7 @@ public class UserServiceV2 {
                 .collect(Collectors.toList());
     }
 
+    @LogExecutionTime
     public void updateUser(UserUpdateRequest request){
         // select * from user where id = ?;
         // Optional<User>
@@ -46,6 +49,7 @@ public class UserServiceV2 {
 //        userRepository.save(user); // 변경감지
     }
 
+    @LogExecutionTime
     public void deleteUser(String name){
         User user = userRepository.findByName(name).orElseThrow(IllegalArgumentException::new);
         userRepository.delete(user);

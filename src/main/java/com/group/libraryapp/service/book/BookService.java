@@ -1,6 +1,7 @@
 package com.group.libraryapp.service.book;
 
 
+import com.group.libraryapp.aop.LogExecutionTime;
 import com.group.libraryapp.domain.book.Book;
 import com.group.libraryapp.domain.book.BookRepository;
 import com.group.libraryapp.domain.user.User;
@@ -28,12 +29,13 @@ public class BookService {
         this.userLoanHistoryRepository = userLoanHistoryRepository;
         this.userRepository = userRepository;
     }
-
+    @LogExecutionTime
     @Transactional
     public void saveBook(BookCreateRequest request){
         bookRepository.save(new Book(request.getName()));
     }
 
+    @LogExecutionTime
     @Transactional
     public void loanBook(BookLoanRequest request){
         // 1. 책 정보 가져오기
@@ -58,6 +60,7 @@ public class BookService {
 //                new UserLoanHistory(user, book.getName()));
     }
 
+    @LogExecutionTime
     @Transactional
     public void returnBook(BookReturnRequest request){
         // 1. 유저 정보를 가져온다.
