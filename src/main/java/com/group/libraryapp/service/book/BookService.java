@@ -11,13 +11,16 @@ import com.group.libraryapp.domain.user.loanhistory.UserLoanHistoryRepository;
 import com.group.libraryapp.dto.book.request.BookCreateRequest;
 import com.group.libraryapp.dto.book.request.BookLoanRequest;
 import com.group.libraryapp.dto.book.request.BookReturnRequest;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.Optional;
 
+@Log4j2
 @Service
 public class BookService {
+
     private final BookRepository bookRepository;
     private final UserLoanHistoryRepository userLoanHistoryRepository;
     private final UserRepository userRepository;
@@ -29,11 +32,13 @@ public class BookService {
         this.userLoanHistoryRepository = userLoanHistoryRepository;
         this.userRepository = userRepository;
     }
+
     @LogExecutionTime
     @Transactional
     public void saveBook(BookCreateRequest request){
         bookRepository.save(new Book(request.getName()));
     }
+
 
     @LogExecutionTime
     @Transactional
@@ -70,9 +75,16 @@ public class BookService {
 //                .findByUserIdAndBookName(user.getId(), request.getBookName())
 //                .orElseThrow(IllegalArgumentException::new);
 //        history.doReturn();
-        System.out.println("========================================");
+//        System.out.println("========================================");
+        log.info("@@@@@@@@@+++++++++++++@@@@@@@@@@@@@@@@@+++++++++");
         // userLoanHistoryRepository.save(history); // 트랜잭션 사용하니깐 안해도됨
         user.returnBook(request.getBookName());
+
+    }
+
+    public void returnBook2(BookReturnRequest request){
+        User user = userRepository.findByName(request.getUserName())
+                .orElseThrow(IllegalArgumentException::new);
 
     }
 }

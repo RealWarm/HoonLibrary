@@ -20,10 +20,11 @@ public class User {
     // 1:n
     // 연관관계의 주인이 아닌쪽에 mappedBy를 해야한다.
     @OneToMany(mappedBy = "user",
-                cascade = CascadeType.ALL,
-                orphanRemoval = true,
-                fetch = FetchType.EAGER) //객체간의 관계가 끊어진 테이터를 자동으로 제거하는 옵션
+                cascade = CascadeType.ALL, // 폭포처럼 흘러 연결되어 있는 객체도 함께 저장되거나 삭제
+                orphanRemoval = true, //객체간의 관계가 끊어진 테이터를 자동으로 제거하는 옵션
+                fetch = FetchType.EAGER)
     private List<UserLoanHistory> userLoanHistories = new ArrayList<>();
+
     protected User() {}
 
     public User(String name, Integer age) {

@@ -1,5 +1,9 @@
 package com.group.libraryapp.domain.book;
 
+import com.group.libraryapp.dto.book.request.BookReturnRequest;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 
 @Entity
@@ -11,8 +15,7 @@ public class Book {
     @Column(nullable=false)
     private String name;
 
-    protected Book() {
-    }
+    protected Book(){}
 
     public Book(String name) {
         if(name==null||name.isBlank()){
