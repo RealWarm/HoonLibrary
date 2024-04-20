@@ -16,6 +16,6 @@ public interface UserLoanHistoryRepository
     // select * from user_loan_history where user_id = ? and book_name = ?;
     Optional<UserLoanHistory> findByUserIdAndBookName(Long userId, String bookName);
 
-    @Query("select i from UserLoanHistory i where i.user.id=:itemDetail and i.bookName=:book_name ")
-    Optional<UserLoanHistory> findByUserIdAAndBookNameJPQL(@Param("userId")Long userId, @Param("bookName")String bookName);
+//    @Query("select i from UserLoanHistory i where i.user.id=:itemDetail and i.bookName=:book_name ")
+//    Optional<UserLoanHistory> findByUserIdAAndBookNameJPQL(@Param("userId")Long userId, @Param("bookName")String bookName);
 }

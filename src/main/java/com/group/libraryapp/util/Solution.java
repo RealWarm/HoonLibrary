@@ -8,9 +8,11 @@ import java.util.List;
 
 public class Solution {
 
-    public static void main(String[] args) throws CsvException, IOException {
-        CSVReader csvReader = new CSVReader(new FileReader("data/wine.csv"));
-        List<String[]> lines = csvReader.readAll();
-        lines.forEach(line -> System.out.println(String.join(",", line)));
-    }
-}
+    public int solution(int n, // 아파트 갯수
+                        int[] stations, //
+                        int w) { // 전파 도달 거리
+        int answer = 0;
+        return answer;
+    }//solution
+
+}//end
