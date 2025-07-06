@@ -1,5 +1,6 @@
 package com.group.libraryapp.util;
 
+import com.group.libraryapp.util.image.damin.ImageResult;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -10,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+
+import static com.group.libraryapp.util.Batch3.imagesResultsService;
 
 
 public class Batch2 {
@@ -43,7 +46,7 @@ public class Batch2 {
             BufferedWriter bw = new BufferedWriter(new FileWriter("HOON.txt", true));
 
             while (br.ready()) {
-                String tmp=br.readLine();
+                String tmp = br.readLine();
                 System.out.println(tmp);
                 bw.write(tmp);
                 sb.append(tmp);
@@ -56,41 +59,41 @@ public class Batch2 {
             e.printStackTrace();
         }
         System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-        System.out.println(sb.toString());
+        System.out.println(sb);
         System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-//        System.out.println("@@@@@@@@@@@@@@1");
-//        JSONObject objData = (JSONObject)new JSONParser().parse(sb.toString()); // json 전체파싱
-//        System.out.println("@@@@@@@@@@@@@@2");
-//        JSONArray arrData = (JSONArray) objData.get("images_results");
-//        JSONObject tmp;
-//        sb = new StringBuilder();
-//        for(int i=0; i<arrData.size(); i++){
-//            tmp = (JSONObject) arrData.get(i);
-//            imagesResultsService.saveImageResult(ImageResult.builder().position((String)tmp.get("position")).
-//                    thumbnail((String)tmp.get("thumbnail")).
-//                    related_content_id((String)tmp.get("related_content_id")).
-//                    serpapi_related_content_link((String)tmp.get("serpapi_related_content_link")).
-//                    source((String)tmp.get("source")).
-//                    source_logo((String)tmp.get("source_logo")).
-//                    title((String)tmp.get("title")).
-//                    link((String)tmp.get("link")).
-//                    original((String)tmp.get("original")).
-//                    original_width((String)tmp.get("original_width")).
-//                    original_height((String)tmp.get("original_height")).
-//                    is_product((String)tmp.get("is_product")).build());
-//            System.out.println("================" + (i+1) + "번째 요소 ================");
-//            System.out.println("position: " + tmp.get("position"));
-//            System.out.println("thumbnail: " + tmp.get("thumbnail"));
-//            System.out.println("related_content_id: " + tmp.get("related_content_id"));
-//            System.out.println("serpapi_related_content_link: " + tmp.get("serpapi_related_content_link"));
-//            System.out.println("source: " + tmp.get("source"));
-//            System.out.println("source_logo: " + tmp.get("source_logo"));
-//            System.out.println("title: " + tmp.get("title"));
-//            System.out.println("link: " + tmp.get("link"));
-//            System.out.println("original: " + tmp.get("original"));
-//            System.out.println("original_width: " + tmp.get("original_width"));
-//            System.out.println("original_height: " + tmp.get("original_height"));
-//        }//for-i
+        System.out.println("@@@@@@@@@@@@@@1");
+        JSONObject objData = (JSONObject)new JSONParser().parse(sb.toString()); // json 전체파싱
+        System.out.println("@@@@@@@@@@@@@@2");
+        JSONArray arrData = (JSONArray) objData.get("images_results");
+        JSONObject tmp;
+        sb = new StringBuilder();
+        for(int i=0; i<arrData.size(); i++){
+            tmp = (JSONObject) arrData.get(i);
+            imagesResultsService.saveImageResult(ImageResult.builder().position((Long)tmp.get("position")).
+                    thumbnail((String)tmp.get("thumbnail")).
+                    related_content_id((String)tmp.get("related_content_id")).
+                    serpapi_related_content_link((String)tmp.get("serpapi_related_content_link")).
+                    source((String)tmp.get("source")).
+                    source_logo((String)tmp.get("source_logo")).
+                    title((String)tmp.get("title")).
+                    link((String)tmp.get("link")).
+                    original((String)tmp.get("original")).
+                    original_width((Long)tmp.get("original_width")).
+                    original_height((Long)tmp.get("original_height")).
+                    is_product((Boolean) tmp.get("is_product")).build());
+            System.out.println("================" + (i+1) + "번째 요소 ================");
+            System.out.println("position: " + tmp.get("position"));
+            System.out.println("thumbnail: " + tmp.get("thumbnail"));
+            System.out.println("related_content_id: " + tmp.get("related_content_id"));
+            System.out.println("serpapi_related_content_link: " + tmp.get("serpapi_related_content_link"));
+            System.out.println("source: " + tmp.get("source"));
+            System.out.println("source_logo: " + tmp.get("source_logo"));
+            System.out.println("title: " + tmp.get("title"));
+            System.out.println("link: " + tmp.get("link"));
+            System.out.println("original: " + tmp.get("original"));
+            System.out.println("original_width: " + tmp.get("original_width"));
+            System.out.println("original_height: " + tmp.get("original_height"));
+        }//for-i
 
 
     }//main
